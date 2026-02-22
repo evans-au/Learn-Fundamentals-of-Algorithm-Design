@@ -29,19 +29,40 @@ Most algorithms are built from a small set of reusable patterns. Once you master
 | Filter | Select matching items | "Which products cost under $50?" |
 | Transform | Change each item | "Apply 10% discount to all prices" |
 
+---
+
+## A Note on Loop Syntax
+
+The HSC Course Specifications define only the **counted loop** (`FOR...TO...NEXT`):
+
+```
+FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+    ' Access collection[i]
+NEXT i
+```
+
+Some textbooks and programming languages (like Python) use an **iterator loop** (`for item in collection`). While this is cleaner to read, it is **NOT official HSC pseudocode**. In your HSC exam, always use the counted loop.
+
+| Loop Type | Syntax | HSC Valid? |
+|-----------|--------|------------|
+| **Counted Loop** | `FOR i = 0 TO LENGTH - 1` | Yes (use this) |
+| Iterator Loop | `FOR EACH item IN collection` | No (not in spec) |
+
+> **Important**: All templates in this lesson use the HSC-compliant counted loop syntax.
+
 ## Pattern 1: Counter
 
 Counts how many items match a condition.
 
-### Pseudocode Template:
+### Pseudocode Template (HSC Spec):
 ```
 BEGIN CountPattern
     SET count TO 0
-    FOR EACH item IN collection
-        IF item matches condition THEN
+    FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+        IF collection[i] matches condition THEN
             SET count TO count + 1
         ENDIF
-    NEXT item
+    NEXT i
     OUTPUT count
 END CountPattern
 ```
@@ -75,13 +96,13 @@ _Counter Pattern: Initialize count to 0, increment when condition is true. Blue 
 
 Builds up a running total or combined result.
 
-### Pseudocode Template:
+### Pseudocode Template (HSC Spec):
 ```
 BEGIN AccumulatorPattern
     SET total TO 0    ' or empty string, 1 for product, etc.
-    FOR EACH item IN collection
-        SET total TO total + item
-    NEXT item
+    FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+        SET total TO total + collection[i]
+    NEXT i
     OUTPUT total
 END AccumulatorPattern
 ```
@@ -136,15 +157,15 @@ D) Neither — use Find Maximum
 
 Tracks whether something is true or false. Often used to check if ANY item matches, or if ALL items match.
 
-### Pseudocode Template:
+### Pseudocode Template (HSC Spec):
 ```
 BEGIN FlagPattern
     SET found TO FALSE    ' or valid TO TRUE
-    FOR EACH item IN collection
-        IF item matches condition THEN
+    FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+        IF collection[i] matches condition THEN
             SET found TO TRUE
         ENDIF
-    NEXT item
+    NEXT i
     IF found = TRUE THEN
         OUTPUT "At least one match found"
     ELSE
@@ -222,15 +243,15 @@ Start with `collection[0]` not with 0 or a guessed value. What if all values are
 
 Selects a subset of items that match a condition.
 
-### Pseudocode Template:
+### Pseudocode Template (HSC Spec):
 ```
 BEGIN FilterPattern
     SET result TO []    ' Empty list for results
-    FOR EACH item IN collection
-        IF item matches condition THEN
-            APPEND item TO result
+    FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+        IF collection[i] matches condition THEN
+            APPEND collection[i] TO result
         ENDIF
-    NEXT item
+    NEXT i
     OUTPUT result
 END FilterPattern
 ```
@@ -256,14 +277,14 @@ END GetPassingScores
 
 Creates a new list by applying an operation to each item.
 
-### Pseudocode Template:
+### Pseudocode Template (HSC Spec):
 ```
 BEGIN TransformPattern
     SET result TO []
-    FOR EACH item IN collection
-        SET transformed TO operation(item)
+    FOR i = 0 TO LENGTH(collection) - 1 STEP 1
+        SET transformed TO operation(collection[i])
         APPEND transformed TO result
-    NEXT item
+    NEXT i
     OUTPUT result
 END TransformPattern
 ```
@@ -406,10 +427,10 @@ END AveragePassingScore
 
 ```
 
-<details>
-<summary><b>Example Answer</b></summary>
+**Example Answer:**
 
-```
+
+```python
 # Example solution
 BEGIN AveragePassingScore
     SET scores TO [85, 42, 91, 55, 38, 78, 92, 45]
@@ -432,8 +453,6 @@ BEGIN AveragePassingScore
     OUTPUT "Average passing score: " + average
 END AveragePassingScore
 ```
-
-</details>
 
 ## ✍️ Practice: Find Longest Word
 
@@ -476,10 +495,10 @@ END FindLongestWord
 
 ```
 
-<details>
-<summary><b>Example Answer</b></summary>
+**Example Answer:**
 
-```
+
+```python
 # Example solution
 BEGIN FindLongestWord
     SET words TO ["cat", "elephant", "dog", "hippopotamus", "ant"]
@@ -494,8 +513,6 @@ BEGIN FindLongestWord
     OUTPUT "Longest word: " + longest
 END FindLongestWord
 ```
-
-</details>
 
 ## Pattern Summary Table
 
@@ -560,10 +577,10 @@ else:
     print("No passing scores")
 ```
 
-<details>
-<summary><b>Example Solution</b></summary>
+**Example Solution:**
 
-```
+
+```python
 # Example solution
 scores = [85, 42, 91, 55, 38, 78, 92, 45]
 
@@ -584,8 +601,6 @@ else:
     print("No passing scores")
 ```
 
-</details>
-
 ## Pseudocode to Python Translation
 
 | Pattern | HSC Pseudocode | Python |
@@ -604,8 +619,7 @@ Think of an app you use regularly (social media, music, games, shopping). Identi
 2. What data is being processed?
 3. What's the purpose?
 
-<details>
-<summary><b>Example Answer</b></summary>
+**Example Answer:**
 
 Spotify likely uses:
 
@@ -613,7 +627,6 @@ Spotify likely uses:
 
 2. **Counter Pattern**: Spotify counts how many times I've listened to each song to create my 'Top Songs' playlist. Every time a song plays, it increments a counter for that song.
 
-</details>
 
 ## ✅ Lesson Complete!
 
